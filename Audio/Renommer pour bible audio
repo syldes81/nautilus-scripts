@@ -1,0 +1,31 @@
+#!/bin/bash
+
+start=`zenity --title "Nom du fichier de départ" --entry --text "Entrez le premier numéro :" --entry-text="1"`
+name=`zenity --title "Nom du livre" --entry --text "Nom du livre :"`
+
+IFS=$'\n'
+
+i=$start
+j=1
+
+for file in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+do
+  lead_zeros_all="" 
+  if   [[ "$i" -lt 10 ]];   then lead_zeros_all="000"
+  elif [[ "$i" -lt 100 ]];  then lead_zeros_all="00"
+  elif [[ "$i" -lt 1000 ]]; then lead_zeros_all="0"
+  else lead_zeros_all=""
+  fi
+
+  lead_zeros_book="" 
+  if   [[ "$j" -lt 10 ]]; then lead_zeros_book="0"
+  # Note : ne fonctionne pas pour les psaumes. Il faut changer en :
+  #if   [[ "$j" -lt 10 ]];  then lead_zeros_book="00"
+  #if   [[ "$j" -lt 100 ]]; then lead_zeros_book="0"
+  else lead_zeros_book=""
+  fi
+
+    mv "$file" "`dirname ${file}`/${lead_zeros_all}${i} - ${name} ${lead_zeros_book}${j}.mp3"
+    let i+=1
+    let j+=1
+done

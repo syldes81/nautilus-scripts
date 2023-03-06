@@ -1,0 +1,12 @@
+#!/bin/bash
+
+IFS=$'\n'
+
+i=$start
+
+for file in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+do
+    echo $file >> $HOME/liste1.txt
+    let i+=1
+
+done

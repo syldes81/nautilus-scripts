@@ -1,0 +1,34 @@
+#!/bin/bash
+
+str=`zenity --title "Acoller les images" --entry --text "Nom de fichier en sortie:" --entry-text "montage.jpg"`
+
+if [ $? -ne 0 ]; then
+  exit
+fi
+
+IFS=$'\n'
+
+nbfiles=0
+for file in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+do
+    let nbfiles+=1
+##    geometry=`identify file | awk '{print $3}'`
+##    width=`echo $geometry | cut -d x -f 1`
+##    height=`echo $geometry | cut -d x -f 2`
+done
+#unit=`expr 100 / $nbfiles`
+
+montage -thumbnail 4272x4272 -geometry +0+0 -tile ${nbfiles}x1 $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS "$str" | zenity --progress --pulsate --auto-close --no-cancel
+
+#i=0
+#for file in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+#do
+#    dirname=`dirname $file`
+#    basename=`basename $file`
+#    newfile=$dirname/${basename#$str}
+#
+##    zenity --info --text "mv $file $newfile"
+#
+#    let i+=unit
+#    echo $i
+#done | zenity --progress --auto-close

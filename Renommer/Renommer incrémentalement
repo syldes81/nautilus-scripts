@@ -1,0 +1,15 @@
+#!/bin/bash
+
+start=`zenity --title "Nom du fichier de départ" --entry --text "Entrez le premier numéro :" --entry-text="1"`
+
+IFS=$'\n'
+
+i=$start
+
+for file in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+do
+#    zenity --info --text="mv $file `dirname ${file}`/${i}.${file##*.}"
+    mv "$file" "`dirname ${file}`/${i}.${file##*.}"
+    let i+=1
+
+done

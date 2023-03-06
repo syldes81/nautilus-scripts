@@ -1,0 +1,21 @@
+#!/bin/bash
+
+str=`zenity --title "Ajouter une extension" --entry --text "Chaîne à ajouter :"`
+
+IFS=$'\n'
+
+nbfiles=0
+for file in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+do
+    let nbfiles+=1
+done
+unit=`expr 100 / $nbfiles`
+
+i=0
+
+for file in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+do
+    mv "$file" "${file}${str}"
+    let i+=unit
+    echo $i
+done | zenity --progress --auto-close

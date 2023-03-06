@@ -1,0 +1,18 @@
+#!/bin/bash
+
+sep=`zenity --title "Séparateur" --entry --text "Entrez le séparateur :" --entry-text="_"`
+start=`zenity --title "Valeur de départ" --entry --text "Entrez la valeur de départ pour l'incrément :" --entry-text="1"`
+
+IFS=$'\n'
+
+if [[ -n $start ]]; then
+  i=$start
+fi
+
+for file in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+do
+#    zenity --info --text="mv $file `dirname ${file}`/${i}${sep}`basename ${file}`"
+    mv "$file" "`dirname ${file}`/`basename ${file}`${sep}${i}"
+    let i+=1
+
+done
